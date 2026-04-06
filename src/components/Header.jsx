@@ -2,8 +2,13 @@ import HandbagIcon from '../assets/handbag.svg'
 import HeartIcon from '../assets/heart.svg'
 import ShoppingCartIcon from '../assets/shopping-cart.svg'
 import ProfilePicture from '../assets/profile-picture.svg'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
+    const navigate = useNavigate();
+    const handleSearch = (e) => {
+        navigate(`/?search=${e.target.search.value}`)
+    }
     return (
         <>
             <header className='flex justify-between items-center px-12 py-2 shadow'>
@@ -20,7 +25,7 @@ export default function Header() {
                     </ul>
                 </div>
                 <div className='flex gap-4'>
-                    <form className="max-w-md mx-auto">
+                    <form className="max-w-md mx-auto" onSubmit={handleSearch}>
                         <label htmlFor="search" className="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">

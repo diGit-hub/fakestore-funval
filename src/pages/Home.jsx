@@ -1,9 +1,15 @@
 import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import { useFetchProducts } from "../hooks/useFetchProducts";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
     const { products, loading, error } = useFetchProducts();
+    const [searchParams] = useSearchParams()
+    const searchTerm = searchParams.get('search') || ''
+    const filteredProducts = products.filter(p =>
+        p.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     return (
         <>
             <Header></Header>
@@ -14,7 +20,7 @@ export default function Home() {
                 <section>
                     <p>Products</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-48">
-                        {products.map((product) => (
+                        {filteredProducts.map((product) => (
                             <ProductCard key={product.id} product={product}></ProductCard>
                         ))}
                     </div>
