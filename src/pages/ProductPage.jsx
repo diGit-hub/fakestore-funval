@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
@@ -61,6 +62,7 @@ export default function ProductPage() {
                     </div>
                 </div>
             </main>
+            <Footer />
         </>
     )
 }
