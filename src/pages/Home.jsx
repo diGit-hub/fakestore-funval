@@ -1,10 +1,12 @@
 import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 import { useFetchProducts } from "../hooks/useFetchProducts";
 import { useSearchParams, useParams } from "react-router-dom";
 
 export default function Home() {
-    const { products, loading, error } = useFetchProducts();
+    const { products, loading, error, refetch } = useFetchProducts();
     const { category } = useParams()
     const [searchParams] = useSearchParams()
     const searchTerm = searchParams.get('search') || ''
@@ -12,6 +14,9 @@ export default function Home() {
         (category ? p.category === category : true) &&
         p.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
+
+    if (loading) return <><Header /><Loading /></>
+    if (error) return <><Header /><Error message={error} onRetry={refetch} /></>
     return (
         <>
             <Header></Header>

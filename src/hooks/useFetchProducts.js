@@ -6,20 +6,23 @@ export const useFetchProducts = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('https://fakestoreapi.com/products');
-                setProducts(response.data);
-            }
-            catch (err) {
-                setError("Couldn't load products");
-            }
-            finally {
-                setLoading(false);
-            }
+    const fetchData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.get('https://fakestoreapi.com/products');
+            setProducts(response.data);
         }
+        catch (err) {
+            setError("Couldn't load products");
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
         fetchData();
     }, [])
-    return {products, loading, error}
+    return {products, loading, error, refetch: fetchData}
 }

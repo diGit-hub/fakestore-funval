@@ -2,6 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Header from '../components/Header'
+import Loading from '../components/Loading'
+import Error from '../components/Error'
+
 export default function ProductPage() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -9,22 +12,25 @@ export default function ProductPage() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await axios.get(`https://fakestoreapi.com/products/${id}`)
-                setProduct(response.data)
-            } catch (err) {
-                setError('Product not found')
-            } finally {
-                setLoading(false)
-            }
+    const fetchProduct = async () => {
+        setLoading(true)
+        setError(null)
+        try {
+            const response = await axios.get(`https://fakestoreapi.com/products/${id}`)
+            setProduct(response.data)
+        } catch (err) {
+            setError('Product not found')
+        } finally {
+            setLoading(false)
         }
+    }
+
+    useEffect(() => {
         fetchProduct()
     }, [id])
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>{error}</p>
+    if (loading) return <><Header /><Loading /></>
+    if (error) return <><Header /><Error message={error} onRetry={fetchProduct} /></>
     if (!product) return null
 
     return (
