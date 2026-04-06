@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <HashRouter>
         <Routes>
             <Route index path='/' element={<Home/>}/>
+            <Route path='*' element={<NotFound/>}/>
         </Routes>
     </HashRouter>
   )
