@@ -1,13 +1,15 @@
 import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import { useFetchProducts } from "../hooks/useFetchProducts";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 
 export default function Home() {
     const { products, loading, error } = useFetchProducts();
+    const { category } = useParams()
     const [searchParams] = useSearchParams()
     const searchTerm = searchParams.get('search') || ''
     const filteredProducts = products.filter(p =>
+        (category ? p.category === category : true) &&
         p.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
     return (

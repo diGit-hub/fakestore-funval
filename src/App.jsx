@@ -9,6 +9,7 @@ function App() {
         <HashRouter>
             <Routes>
                 <Route index path='/' element={<Home />} />
+                <Route path='/products/category/:category' element={<Home />} />
                 <Route path='/products/:id' element={<ProductPage />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>

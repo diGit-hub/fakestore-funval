@@ -2,10 +2,12 @@ import HandbagIcon from '../assets/handbag.svg'
 import HeartIcon from '../assets/heart.svg'
 import ShoppingCartIcon from '../assets/shopping-cart.svg'
 import ProfilePicture from '../assets/profile-picture.svg'
-import { useNavigate } from 'react-router-dom'
+import CategoryFilter from './CategoryFilter'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function Header() {
     const navigate = useNavigate();
+    const { category } = useParams()
     const handleSearch = (e) => {
         navigate(`/?search=${e.target.search.value}`)
     }
@@ -18,10 +20,7 @@ export default function Header() {
                         <p>LUXE.</p>
                     </div>
                     <ul className="flex gap-4">
-                        <li>Electronics</li>
-                        <li>Jewelry</li>
-                        <li>Men's</li>
-                        <li>Women's</li>
+                        <CategoryFilter activeCategory={category} />
                     </ul>
                 </div>
                 <div className='flex gap-4'>
