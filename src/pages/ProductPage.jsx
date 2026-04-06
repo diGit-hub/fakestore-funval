@@ -1,9 +1,10 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Header from '../components/Header'
 export default function ProductPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -31,9 +32,9 @@ export default function ProductPage() {
             <Header />
             <main className="bg-background min-h-screen py-8 px-4">
                 <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-6 md:p-8">
-                    <Link to="/" className="text-primary hover:underline mb-6 inline-block">
+                    <button onClick={() => navigate(-1)} className="text-primary hover:underline mb-6 inline-block">
                         ← Go Back
-                    </Link>
+                    </button>
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="flex items-center justify-center bg-gray-50 rounded-xl p-4">
                             <img className="w-full h-64 md:h-80 object-contain" src={product.image} alt={product.title}/>
