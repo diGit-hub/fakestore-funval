@@ -9,11 +9,12 @@ export default function Header() {
     const navigate = useNavigate();
     const { category } = useParams()
     const handleSearch = (e) => {
+        e.preventDefault()
         navigate(`/?search=${e.target.search.value}`)
     }
     return (
         <>
-            <header className='flex justify-between items-center px-12 py-2 shadow'>
+            <header className='hidden md:flex justify-between items-center px-12 py-2 shadow'>
                 <div className='flex gap-6'>
                     <div className='flex gap-2'>
                         <img src={HandbagIcon} alt="Logo image" />
@@ -38,6 +39,37 @@ export default function Header() {
                     <img src={HeartIcon} alt="Favorites"/>
                     <img src={ShoppingCartIcon} alt="Cart" />
                     <img src={ProfilePicture} alt="Avatar"/> 
+                </div>
+            </header>
+            <header className='md:hidden shadow'>
+                <div className='flex justify-between items-center px-4 py-3'>
+                    <div className='flex items-center gap-2'>
+                        <img src={HandbagIcon} alt="Logo image" className="w-6 h-6" />
+                        <p className="font-bold text-lg">LUXE.</p>
+                    </div>
+                    <div className='flex items-center gap-3'>
+                        <img src={HeartIcon} alt="Favorites" className="w-5 h-5"/>
+                        <img src={ShoppingCartIcon} alt="Cart" className="w-5 h-5" />
+                        <img src={ProfilePicture} alt="Avatar" className="w-7 h-7 rounded-full"/> 
+                    </div>
+                </div>
+                <div className="px-4 pb-3">
+                    <form onSubmit={handleSearch}>
+                        <label htmlFor="search" className="sr-only">Search</label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 start-0 flex items-center ps-3">
+                                <button type="submit" className="cursor-pointer">
+                                    <svg className="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" /></svg>
+                                </button>
+                            </div>
+                            <input type="search" id="search" className="block w-full p-2.5 ps-9 bg-neutral-secondary-medium rounded-2xl border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search" required />
+                        </div>
+                    </form>
+                </div>
+                <div className="px-4 pb-3 overflow-x-auto">
+                    <ul className="flex gap-4 whitespace-nowrap">
+                        <CategoryFilter activeCategory={category} />
+                    </ul>
                 </div>
             </header>
         </>
